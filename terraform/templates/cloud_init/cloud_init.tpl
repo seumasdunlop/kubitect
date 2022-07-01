@@ -12,6 +12,10 @@ users:
 
 package_upgrade: ${update}
 
+ntp:
+  enabled: true
+  ntp_client: chrony  # Uses cloud-init default chrony configuration
+
 packages:
   - qemu-guest-agent
 
