@@ -18,6 +18,7 @@ ntp:
 
 packages:
   - qemu-guest-agent
+  - avahi-utils
 
 runcmd:
   - [ systemctl, start, qemu-guest-agent.service ]
