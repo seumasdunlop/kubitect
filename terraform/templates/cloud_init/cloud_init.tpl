@@ -12,6 +12,17 @@ users:
 
 package_upgrade: ${update}
 
+disk_setup:
+  /dev/disk/azure/scsi1/lun0:
+    table_type: gpt
+    layout: True
+    overwrite: True
+
+fs_setup:
+  - device: /dev/disk/azure/scsi1/lun0
+    partition: 1
+    filesystem: ext4
+
 ntp:
   enabled: true
   ntp_client: chrony  # Uses cloud-init default chrony configuration
