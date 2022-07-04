@@ -13,15 +13,18 @@ users:
 package_upgrade: ${update}
 
 disk_setup:
-  /dev/disk/azure/scsi1/lun0:
+  /dev/vdb:
     table_type: gpt
     layout: True
     overwrite: True
 
 fs_setup:
-  - device: /dev/disk/azure/scsi1/lun0
+  - device: /dev/vdb
     partition: 1
     filesystem: ext4
+
+mounts:
+  - [ /dev/vdb, /opt/data ]
 
 ntp:
   enabled: true
