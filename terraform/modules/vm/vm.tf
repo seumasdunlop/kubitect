@@ -125,7 +125,8 @@ resource "libvirt_domain" "vm_domain" {
   provisioner "remote-exec" {
 
     connection {
-      host        = self.network_interface.0.addresses.0
+      # host        = self.network_interface.0.addresses.0
+      host        = var.vm_ip != null ? [var.vm_ip] : self.network_interface.0.addresses.0  # test using the static IP if available. It was timing out waiting for 'self.network_interface.0.addresses.0' to be set.
       type        = "ssh"
       user        = var.vm_user
       private_key = file(var.vm_ssh_private_key)
