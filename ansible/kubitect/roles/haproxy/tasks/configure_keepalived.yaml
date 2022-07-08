@@ -3,7 +3,8 @@
   set_fact:
     load_balancer_ips: "{{ infra.cluster.nodes.loadBalancer.instances | map(attribute='ip') }}"
     control_plane_ip: "{{ infra.cluster.nodes.loadBalancer.vip }}"
-    network_interface: "{{ infra.cluster.nodeTemplate.os.networkInterface }}"
+    # network_interface: "{{ infra.cluster.nodeTemplate.os.networkInterface }}"
+    network_interface: "br0"  # hard code temp fix - was pulling ens3 from infrastructure.yml
 
   # When control plane IP is not one of the load balancer IPs
   # then it is a virtual IP (VIP), and Keepalived is required.
