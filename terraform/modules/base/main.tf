@@ -40,11 +40,11 @@ locals {
     )
 
     networkInterface = (
-      try(var.config.cluster.cluster.nodeTemplate.os.networkInterface, null) != null
-      ? var.config.cluster.cluster.nodeTemplate.os.networkInterface
+      try(var.config.cluster.nodeTemplate.os.networkInterface, null) != null
+      ? var.config.cluster.nodeTemplate.os.networkInterface
       : (
-        try(var.infra_config.cluster.cluster.nodeTemplate.os.networkInterface, null) != null && local.os_distro_changed == false
-        ? var.infra_config.cluster.cluster.nodeTemplate.os.networkInterface
+        try(var.infra_config.cluster.nodeTemplate.os.networkInterface, null) != null && local.os_distro_changed == false
+        ? var.infra_config.cluster.nodeTemplate.os.networkInterface
         : var.defaults_config.distros[index(var.defaults_config.distros.*.name, local.os_distro)].networkInterface
       )
     )
