@@ -183,7 +183,7 @@ resource "null_resource" "ssh_known_hosts" {
   count = var.vm_ssh_known_hosts ? 1 : 0
 
   triggers = {
-    vm_ip = libvirt_domain.vm_domain.network_interface.0.addresses.0
+    vm_ip = libvirt_domain.vm_domain.network_interface.0.addresses
   }
 
   provisioner "local-exec" {
