@@ -178,29 +178,29 @@ resource "null_resource" "remove_dhcp_lease" {
 #================================
 
 # Adds VM's SSH key to known hosts #
-resource "null_resource" "ssh_known_hosts" {
+# resource "null_resource" "ssh_known_hosts" {
 
-  count = var.vm_ssh_known_hosts ? 1 : 0
+#   count = var.vm_ssh_known_hosts ? 1 : 0
 
-  triggers = {
-    vm_ip = libvirt_domain.vm_domain.network_interface.0.addresses
-  }
+#   triggers = {
+#     vm_ip = libvirt_domain.vm_domain.network_interface.0.addresses
+#   }
 
-  provisioner "local-exec" {
-    command = <<-EOF
-      sh ./scripts/filelock-exec.sh \
-        "touch ~/.ssh/known_hosts && ssh-keygen -R $VM_IP && ssh-keyscan -t rsa $VM_IP \
-        | tee -a ~/.ssh/known_hosts && rm -f ~/.ssh/known_hosts.old"
-    EOF
+#   provisioner "local-exec" {
+#     command = <<-EOF
+#       sh ./scripts/filelock-exec.sh \
+#         "touch ~/.ssh/known_hosts && ssh-keygen -R $VM_IP && ssh-keyscan -t rsa $VM_IP \
+#         | tee -a ~/.ssh/known_hosts && rm -f ~/.ssh/known_hosts.old"
+#     EOF
 
-    environment = {
-      VM_IP = libvirt_domain.vm_domain.network_interface.0.addresses.0
-    }
-  }
+#     environment = {
+#       VM_IP = libvirt_domain.vm_domain.network_interface.0.addresses.0
+#     }
+#   }
 
-  provisioner "local-exec" {
-    when       = destroy
-    command    = "sh ./scripts/filelock-exec.sh \"ssh-keygen -R ${self.triggers.vm_ip}\""
-    on_failure = continue
-  }
-}
+#   provisioner "local-exec" {
+#     when       = destroy
+#     command    = "sh ./scripts/filelock-exec.sh \"ssh-keygen -R ${self.triggers.vm_ip}\""
+#     on_failure = continue
+#   }
+# }
