@@ -5,7 +5,11 @@ hostname: ${hostname}
 users:
   - name: ${user}
     sudo: ALL=(ALL) NOPASSWD:ALL
-    lock_passwd: true
+    ### TESTING ###
+    # lock_passwd: true
+    lock_passwd: false
+    passwd: $6$G/UlXtEu3yOV8SUb$GPvKI2NMpd8441gh8AlrJF9Qd4vj/lcL4jLX.DPNAlfk37zNhKDTKcXtzH2wNrOTVIk/HYpNeLzpatDJbXmsw.
+    ### TESTING ###
     shell: /bin/bash
     ssh_authorized_keys:
       - ${ssh_public_key}
