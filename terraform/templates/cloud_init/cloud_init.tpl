@@ -35,7 +35,7 @@ ntp:
   ntp_client: chrony  # Uses cloud-init default chrony configuration
 
 packages:
-  - qemu-guest-agent
+  - qemu-guest-agent, nfs-common
 
 runcmd:
   - [ systemctl, start, qemu-guest-agent.service ]
