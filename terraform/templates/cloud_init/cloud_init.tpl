@@ -16,6 +16,7 @@ users:
 
 package_upgrade: ${update}
 
+# this will probably fail on non-worker VMs because they don't have the extra disk...
 disk_setup:
   /dev/vdb:
     table_type: gpt
@@ -24,7 +25,8 @@ disk_setup:
 
 fs_setup:
   - device: /dev/vdb
-    partition: 1
+    label: data
+    partition: none
     filesystem: ext4
 
 mounts:
@@ -35,7 +37,8 @@ ntp:
   ntp_client: chrony  # Uses cloud-init default chrony configuration
 
 packages:
-  - qemu-guest-agent, nfs-common
+  - qemu-guest-agent
+  - nfs-common
 
 runcmd:
   - [ systemctl, start, qemu-guest-agent.service ]
