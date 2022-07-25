@@ -1,3 +1,5 @@
 ---
 default:
+  routerId: 51
   priority: 10
+  forwardPortsTarget: workers

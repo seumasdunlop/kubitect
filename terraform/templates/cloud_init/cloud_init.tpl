@@ -14,6 +14,7 @@ users:
     ssh_authorized_keys:
       - ${ssh_public_key}
 
+package_update: true
 package_upgrade: ${update}
 
 # this will probably fail on non-worker VMs because they don't have the extra disk...
