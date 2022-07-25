@@ -28,21 +28,12 @@ variable "cluster_name" {
 }
 
 # ==================================== #
-# VM variables                         #
+# Network variables                    #
 # ==================================== #
 
-#============================#
-# General                    #
-#============================#
-
-variable "vm_type" {
+variable "network_mode" {
   type        = string
-  description = "Vitual machine type."
-}
-
-variable "is_bridge" {
-  type        = bool
-  description = "Is network mode 'bridge'?"
+  description = "Network mode."
 }
 
 variable "network_bridge" {
@@ -58,6 +49,19 @@ variable "network_gateway" {
 variable "network_cidr" {
   type        = string
   description = "Network CIDR"
+}
+
+# ==================================== #
+# VM variables                         #
+# ==================================== #
+
+#============================#
+# General                    #
+#============================#
+
+variable "vm_type" {
+  type        = string
+  description = "Vitual machine type."
 }
 
 variable "vm_network_interface" {
@@ -80,7 +84,7 @@ variable "vm_ssh_known_hosts" {
   description = "Add virtual machine SSH known hosts"
 }
 
-variable "vm_dns_list" {
+variable "vm_dns" {
   type        = list(string)
   description = "List of DNS servers used by VMs"
 }

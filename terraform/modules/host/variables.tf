@@ -55,7 +55,6 @@ variable "cluster_name" {
 variable "cluster_nodeTemplate_user" {
   type        = string
   description = "Username used to SSH to the virtual machines."
-  default     = "k8s"
   nullable    = false
 }
 
@@ -71,13 +70,6 @@ variable "cluster_nodeTemplate_ssh_addToKnownHosts" {
   nullable    = false
 }
 
-variable "cluster_nodeTemplate_dns" {
-  type        = list(string)
-  description = "List of DNS servers used by virtual machines."
-  default     = []
-  nullable    = false
-}
-
 variable "cluster_nodeTemplate_os_source" {
   type        = string
   description = "OS source, which can be path on host's filesystem or URL."
@@ -86,6 +78,13 @@ variable "cluster_nodeTemplate_os_source" {
 variable "cluster_nodeTemplate_os_networkInterface" {
   type        = string
   description = "Operating system (os) network interface, which is predefined for the os image."
+}
+
+variable "cluster_nodeTemplate_dns" {
+  type        = list(string)
+  description = "List of DNS servers used by virtual machines."
+  default     = []
+  nullable    = false
 }
 
 variable "cluster_nodeTemplate_updateOnBoot" {
@@ -102,13 +101,12 @@ variable "cluster_nodeTemplate_updateOnBoot" {
 variable "cluster_network_mode" {
   type        = string
   description = "Network mode."
-  default     = "nat"
   nullable    = false
 }
 
-variable "cluster_network_cidr" {
+variable "cluster_network_bridge" {
   type        = string
-  description = "Network CIDR."
+  description = "Network (virtual) bridge."
 }
 
 variable "cluster_network_gateway" {
@@ -117,9 +115,9 @@ variable "cluster_network_gateway" {
   default     = null
 }
 
-variable "cluster_network_bridge" {
+variable "cluster_network_cidr" {
   type        = string
-  description = "Network (virtual) bridge."
+  description = "Network CIDR."
 }
 
 #======================================================================================
