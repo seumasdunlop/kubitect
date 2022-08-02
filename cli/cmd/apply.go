@@ -315,6 +315,22 @@ func removeNodes(configPath string, infraConfigPath string, nodeType string) err
 				return fmt.Errorf("User aborted.")
 			}
 
+			///////////// COPIED /////////////
+			/// will generate the wrong infrastructure file but we'll overwrite it
+			// Prepare Kubespray configuration files.
+			// needs to be before removeNodes()
+			err = playbook.KubitectKubespraySetup()
+			if err != nil {
+				return err
+			}
+
+			// Prepare Kubespray's virtual environment.
+			err = helpers.SetupVirtualEnironment(env.ClusterPath, helpers.Venvs.Kubespray)
+			if err != nil {
+				return err
+			}
+			///////////// COPIED /////////////
+
 			// Remove Kubespray nodes
 			err = playbook.KubesprayRemoveNodes(sshUser, sshPKey, removedNodeNames)
 			if err != nil {

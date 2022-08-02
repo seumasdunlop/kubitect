@@ -27,3 +27,8 @@ versions.tf.save
 /downloads/
 /utils/
 /dev/
+
+## Seumas
+/logs
+kubeconfig.yml
+cli/cli
