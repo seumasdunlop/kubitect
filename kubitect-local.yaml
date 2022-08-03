@@ -1,0 +1,67 @@
+kubitect:
+  url: "https://github.com/seumasdunlop/kubitect/"
+  version: "local-changes"
+hosts:
+  - name: ubuntu-20.04
+    connection:
+      type: remote
+      user: seumas
+      ip: 192.168.20.150
+      ssh:
+        keyfile: "~/.ssh/id_rsa"
+    mainResourcePoolPath: "/var/lib/libvirt/images"
+    dataResourcePools:
+      - name: data
+        path: "/var/lib/libvirt/images"
+cluster:
+  name: "local-k8s-cluster"
+  network:
+    mode: "bridge"
+    cidr: "192.168.20.0/24"
+    bridge: "br0"
+    gateway: "192.168.20.1"
+  nodeTemplate:
+    user: "k8s"
+    ssh:
+      addToKnownHosts: false  # disabled because the tf step fails with IP issue
+      privateKeyPath: "~/.ssh/id_rsa"  # set an explicit private key (instead of using auto-generated ./config/.ssh/)
+    os:
+      distro: "ubuntu"
+      source: "https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img"
+    dns: ["1.1.1.1", "1.0.0.1"]
+    updateOnBoot: false
+  nodes:
+    master:
+      default: # Default properties of all master node instances
+        ram: 2
+        cpu: 2
+        mainDiskSize: 6
+      instances: # Master node instances
+        - id: 1
+          host: cb-tbn-01
+          ip: 192.168.20.200
+    worker:
+      default:
+        ram: 2
+        cpu: 2
+        mainDiskSize: 6
+      instances:
+        - id: core-1 # pipeline-1
+          host: cb-tbn-01
+          ip: 192.168.20.210
+          labels:
+            - coralbay.tv/node-type: "pipeline"
+            - coralbay.tv/pipeline-type: "main"
+            - coralbay.tv/disk-mapped: "true"
+          taints:
+            - "node-type.coralbay.tv=pipeline:NoSchedule"
+          # need annotations? - coralbay.tv/video-lan-ips=["192.168.80.227"]
+kubernetes:
+  version: "v1.22.6"
+  networkPlugin: "calico"
+  dnsMode: "coredns"
+  kubespray:
+    version: "release-2.19" # need a fix that hasn't made it to a release tag so using branch - https://github.com/kubernetes-sigs/kubespray/issues/8960
+    # url: URL to custom Kubespray git repository.
+    #      (default is: https://github.com/kubernetes-sigs/kubespray.git)
+
