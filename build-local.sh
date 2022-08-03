@@ -1,0 +1,1 @@
+./kubitect-local apply --config kubitect-local.yaml --local --debug |& tee logs/kubitect_$(date -Iseconds).log

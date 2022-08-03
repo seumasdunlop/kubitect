@@ -32,3 +32,4 @@ versions.tf.save
 /logs
 kubeconfig.yml
 cli/cli
+/.idea/
