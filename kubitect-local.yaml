@@ -2,11 +2,11 @@ kubitect:
   url: "https://github.com/seumasdunlop/kubitect/"
   version: "local-changes"
 hosts:
-  - name: ubuntu-20.04
+  - name: ubuntu-1
     connection:
       type: remote
-      user: seumas
-      ip: 192.168.20.150
+      user: coralbay
+      ip: 192.168.20.190
       ssh:
         keyfile: "~/.ssh/id_rsa"
     mainResourcePoolPath: "/var/lib/libvirt/images"
@@ -30,6 +30,7 @@ cluster:
       source: "https://cloud-images.ubuntu.com/releases/22.04/release/ubuntu-22.04-server-cloudimg-amd64.img"
     dns: ["1.1.1.1", "1.0.0.1"]
     updateOnBoot: false
+    cpuMode: "host-passthrough"
   nodes:
     master:
       default: # Default properties of all master node instances
@@ -38,7 +39,7 @@ cluster:
         mainDiskSize: 6
       instances: # Master node instances
         - id: 1
-          host: cb-tbn-01
+          host: ubuntu-1
           ip: 192.168.20.200
     worker:
       default:
@@ -46,9 +47,17 @@ cluster:
         cpu: 2
         mainDiskSize: 6
       instances:
-        - id: core-1 # pipeline-1
-          host: cb-tbn-01
+        - id: 1 # pipeline-1
+          name: pipeline-1
+          host: ubuntu-1
           ip: 192.168.20.210
+          extra_bridges:
+            - bridge: br1
+              network_interface: ens4
+              ipCidr: 192.168.21.210/24
+            - bridge: br2
+              network_interface: ens5
+              ipCidr: 192.168.22.210/24
           labels:
             - coralbay.tv/node-type: "pipeline"
             - coralbay.tv/pipeline-type: "main"
