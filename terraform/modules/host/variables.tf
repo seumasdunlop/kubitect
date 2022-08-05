@@ -94,6 +94,11 @@ variable "cluster_nodeTemplate_updateOnBoot" {
   nullable    = false
 }
 
+variable "cluster_nodeTemplate_cpuMode" {
+  type        = string
+  description = "Libvirt CPU mode."
+}
+
 #================================
 # Cluster network
 #================================
@@ -238,6 +243,7 @@ variable "cluster_nodes_worker_default_dataDisks" {
 variable "cluster_nodes_worker_instances" {
   type = list(object({
     id           = number
+    name         = optional(string)
     host         = optional(string)
     mac          = optional(string)
     ip           = optional(string)
@@ -248,6 +254,11 @@ variable "cluster_nodes_worker_instances" {
       name : string
       pool : string
       size : number
+    })))
+    extra_bridges = optional(list(object({
+      bridge            : string
+      network_interface : optional(string)
+      ipCidr            : optional(string)
     })))
   }))
   description = "Worker node instances."

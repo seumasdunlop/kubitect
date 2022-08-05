@@ -51,6 +51,15 @@ variable "network_cidr" {
   description = "Network CIDR"
 }
 
+variable "extra_bridges" {
+  type = list(object({
+    bridge            = string
+    network_interface = optional(string)
+    ipCidr            = optional(string)
+  }))
+  description = "Additional network interfaces."
+}
+
 # ==================================== #
 # VM variables                         #
 # ==================================== #
@@ -106,6 +115,11 @@ variable "vm_name" {
 variable "vm_id" {
   type        = number
   description = "Unique VM id used to differentiate VMs of the same type."
+}
+
+variable "vm_cpuMode" {
+  type          = string
+  description = "The libvirt CPU emulation mode."
 }
 
 variable "vm_cpu" {
