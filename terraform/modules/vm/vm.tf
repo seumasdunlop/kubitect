@@ -77,7 +77,7 @@ resource "libvirt_domain" "vm_domain" {
   autostart = true
 
   cpu {
-    mode = var.vm_cpuMode != null ? var.vm_cpuMode : "custom"
+    mode = var.vm_cpuMode
   }
   
   cloudinit = libvirt_cloudinit_disk.cloud_init.id

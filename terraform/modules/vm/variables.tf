@@ -118,8 +118,10 @@ variable "vm_id" {
 }
 
 variable "vm_cpuMode" {
-  type          = string
+  type        = string
   description = "The libvirt CPU emulation mode."
+  default     = "custom"
+  nullable    = false
 }
 
 variable "vm_cpu" {

@@ -97,6 +97,7 @@ variable "cluster_nodeTemplate_updateOnBoot" {
 variable "cluster_nodeTemplate_cpuMode" {
   type        = string
   description = "Libvirt CPU mode."
+  nullable    = true
 }
 
 #================================
