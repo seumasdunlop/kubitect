@@ -95,7 +95,7 @@ resource "libvirt_domain" "vm_domain" {
   dynamic network_interface {
     for_each = var.extra_bridges
     content {
-      bridge     = network_interface.value.bridge
+      bridge = network_interface.value.bridge
     }
   }
 

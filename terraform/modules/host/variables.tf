@@ -256,10 +256,10 @@ variable "cluster_nodes_worker_instances" {
       pool : string
       size : number
     })))
-    extra_bridges = optional(list(object({
+    extraBridges = optional(list(object({
       bridge            : string
-      network_interface : optional(string)
-      ipCidr            : optional(string)
+      networkInterface  : string
+      ipCidr            : string
     })))
   }))
   description = "Worker node instances."

@@ -187,7 +187,7 @@ module "worker_module" {
   network_bridge   = var.cluster_network_bridge
   network_gateway  = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
   network_cidr     = var.cluster_network_cidr
-  extra_bridges = each.value.extra_bridges
+  extra_bridges    = each.value.extraBridges
 
   # Worker node specific variables #
   vm_name              = each.value.name != null ? "${var.cluster_name}-${each.value.name}" : "${var.cluster_name}-${var.node_types.worker}-${each.value.id}"

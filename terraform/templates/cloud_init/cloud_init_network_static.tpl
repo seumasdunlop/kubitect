@@ -9,6 +9,6 @@ ethernets:
     nameservers:
       addresses: [${vm_dns_list}]
 %{ for interface in extra_bridges ~}
-  ${interface.network_interface}:
+  ${interface.networkInterface}:
     addresses: [${interface.ipCidr}]
 %{ endfor ~}

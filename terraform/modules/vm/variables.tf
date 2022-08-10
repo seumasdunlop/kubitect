@@ -53,11 +53,13 @@ variable "network_cidr" {
 
 variable "extra_bridges" {
   type = list(object({
-    bridge            = string
-    network_interface = optional(string)
-    ipCidr            = optional(string)
+    bridge           = string
+    networkInterface = string
+    ipCidr           = string
   }))
-  description = "Additional network interfaces."
+  description = "Additional network bridges."
+  nullable = false
+  default  = []
 }
 
 # ==================================== #
