@@ -132,14 +132,15 @@ resource "libvirt_domain" "vm_domain" {
   provisioner "remote-exec" {
 
     connection {
-      # host        = self.network_interface.0.addresses.0
-      host        = var.vm_ip != null ? var.vm_ip : self.network_interface.0.addresses.0  # test using the static IP if available. It was timing out waiting for 'self.network_interface.0.addresses.0' to be set.
+      host        = self.network_interface.0.addresses.0
+      # host        = var.vm_ip != null ? var.vm_ip : self.network_interface.0.addresses.0  # test using the static IP if available. It was timing out waiting for 'self.network_interface.0.addresses.0' to be set.
       type        = "ssh"
       user        = var.vm_user
       private_key = file(var.vm_ssh_private_key)
     }
 
     inline = [
+      # This doesn't work when re-creating the VM with the same disk because the log file is appended to...
       "while ! sudo grep \"Cloud-init .* finished\" /var/log/cloud-init.log; do echo \"Waiting for cloud-init to finish...\"; sleep 2; done"
     ]
   }
