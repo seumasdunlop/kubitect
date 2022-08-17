@@ -51,12 +51,12 @@ cluster:
           name: pipeline-1
           host: ubuntu-1
           ip: 192.168.20.210
-          extra_bridges:
+          extraBridges:
             - bridge: br1
-              network_interface: ens4
+              networkInterface: ens4
               ipCidr: 192.168.21.210/24
             - bridge: br2
-              network_interface: ens5
+              networkInterface: ens5
               ipCidr: 192.168.22.210/24
           labels:
             - coralbay.tv/node-type: "pipeline"
