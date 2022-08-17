@@ -1,0 +1,9 @@
+---
+- name: Extract Rook eligible nodes
+  include_tasks: rook-eligible-nodes.yaml
+
+- name: Deploy Rook
+  include_tasks: rook-deploy.yaml
+  when:
+    # Prevent Rook deployment when there are no eligible OSD nodes
+    - rook_osd_nodes | length > 0

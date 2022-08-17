@@ -113,7 +113,7 @@ func ExecAnsiblePlaybook(clusterPath string, ansibleCmd *AnsiblePlaybookCmd) err
 	}
 
 	playbook := &playbook.AnsiblePlaybookCmd{
-		Binary:                     filepath.Join(clusterPath, venvBinDir, ansibleCmd.Venv.Name, "bin", "ansible-playbook"),
+		Binary:                     filepath.Join(clusterPath, env.ConstVenvBinDir, ansibleCmd.Venv.Name, "bin", "ansible-playbook"),
 		Exec:                       executor,
 		Playbooks:                  []string{ansibleCmd.PlaybookFile},
 		Options:                    playbookOptions,

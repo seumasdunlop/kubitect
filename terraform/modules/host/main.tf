@@ -85,11 +85,10 @@ module "lb_module" {
   network_id              = local.is_bridge ? null : module.network_module.0.network_id
 
   # Network related variables
-  network_mode     = var.cluster_network_mode
-  network_bridge   = var.cluster_network_bridge
-  network_gateway  = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
-  network_cidr     = var.cluster_network_cidr
-  extra_bridges = []
+  network_mode    = var.cluster_network_mode
+  network_bridge  = var.cluster_network_bridge
+  network_gateway = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
+  network_cidr    = var.cluster_network_cidr
 
   # Load balancer specific variables #
   vm_name              = "${var.cluster_name}-${var.node_types.load_balancer}-${each.value.id}"
@@ -108,6 +107,7 @@ module "lb_module" {
   vm_id                = each.value.id
   vm_mac               = each.value.mac
   vm_ip                = each.value.ip
+  extra_bridges        = []
 
   # Dependancy takes care that resource pool is not removed before volumes are #
   # Also network must be created before VM is initialized #
@@ -134,11 +134,10 @@ module "master_module" {
   network_id              = local.is_bridge ? null : module.network_module.0.network_id
 
   # Network related variables
-  network_mode     = var.cluster_network_mode
-  network_bridge   = var.cluster_network_bridge
-  network_gateway  = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
-  network_cidr     = var.cluster_network_cidr
-  extra_bridges = []
+  network_mode    = var.cluster_network_mode
+  network_bridge  = var.cluster_network_bridge
+  network_gateway = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
+  network_cidr    = var.cluster_network_cidr
 
   # Master node specific variables #
   vm_name              = "${var.cluster_name}-${var.node_types.master}-${each.value.id}"
@@ -157,6 +156,7 @@ module "master_module" {
   vm_id                = each.value.id
   vm_mac               = each.value.mac
   vm_ip                = each.value.ip
+  extra_bridges        = []
 
   # Dependancy takes care that resource pool is not removed before volumes are #
   # Also network must be created before VM is initialized #
@@ -183,11 +183,10 @@ module "worker_module" {
   network_id              = local.is_bridge ? null : module.network_module.0.network_id
 
   # Network related variables
-  network_mode     = var.cluster_network_mode
-  network_bridge   = var.cluster_network_bridge
-  network_gateway  = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
-  network_cidr     = var.cluster_network_cidr
-  extra_bridges    = each.value.extraBridges
+  network_mode    = var.cluster_network_mode
+  network_bridge  = var.cluster_network_bridge
+  network_gateway = var.cluster_network_gateway != null ? var.cluster_network_gateway : cidrhost(var.cluster_network_cidr, 1)
+  network_cidr    = var.cluster_network_cidr
 
   # Worker node specific variables #
   vm_name              = each.value.name != null ? "${var.cluster_name}-${each.value.name}" : "${var.cluster_name}-${var.node_types.worker}-${each.value.id}"
@@ -206,6 +205,7 @@ module "worker_module" {
   vm_id                = each.value.id
   vm_mac               = each.value.mac
   vm_ip                = each.value.ip
+  extra_bridges        = each.value.extraBridges
 
   # Dependancy takes care that resource pool is not removed before volumes are #
   # Also network must be created before VM is initialized #

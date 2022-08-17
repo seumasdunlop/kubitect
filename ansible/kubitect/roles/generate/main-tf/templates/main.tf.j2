@@ -194,6 +194,18 @@ module "output" {
 # Creates a configuration file that contains evaluated 
 # information about the created infrastructure.
 resource "local_file" "output" {
-  content  = replace(yamlencode(module.output), "/((?:^|\n)[\\s-]*)\"([\\w-]+)\":/", "$1$2:")
-  filename = var.infra_config_path
+  content         = replace(yamlencode(module.output), "/((?:^|\n)[\\s-]*)\"([\\w-]+)\":/", "$1$2:")
+  filename        = var.infra_config_path
+  file_permission = 0600
+}
+
+# Removes temporary resources created during execution. #
+resource "null_resource" "cleanup" {
+
+  provisioner "local-exec" {
+    command    = "rm -r ../config/tmp"
+    when       = destroy
+    on_failure = continue
+  }
+
 }

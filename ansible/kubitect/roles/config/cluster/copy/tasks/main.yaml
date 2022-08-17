@@ -3,12 +3,13 @@
   file:
     path: "{{ kubitect_cluster_config_path | dirname }}"
     state: directory
-    mode: "0700"
+    mode: 0700
 
-- name: Create a copy of the custom config file in a cluster dirctory
+- name: Create a copy of the custom config file in a cluster directory
   copy:
     src: "{{ config_path }}"
     dest: "{{ kubitect_cluster_config_path }}"
+    mode: 0600
   when:
     - config_path is defined
     - config_path != ""
@@ -22,7 +23,8 @@
 
     - name: Copy default config file if cluster config is missing
       copy:
-        src: "{{ kubitect_cluster_default_config_path }}"
+        src: "{{ default.cluster_config_path }}"
         dest: "{{ kubitect_cluster_config_path }}"
+        mode: 0600
       when:
         - cluster_config.stat.exists == false

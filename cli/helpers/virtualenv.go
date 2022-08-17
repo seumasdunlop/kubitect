@@ -8,10 +8,6 @@ import (
 	"path/filepath"
 )
 
-const (
-	venvBinDir = "bin/venvs"
-)
-
 type VirtualEnvironment struct {
 	Name             string
 	RequirementsPath string
@@ -23,7 +19,7 @@ var Venvs = struct {
 }{
 	Main: VirtualEnvironment{
 		Name:             "main",
-		RequirementsPath: "requirements.txt",
+		RequirementsPath: "ansible/kubitect/requirements.txt",
 	},
 	Kubespray: VirtualEnvironment{
 		Name:             "kubespray",
@@ -31,9 +27,9 @@ var Venvs = struct {
 	},
 }
 
-// setupVirtualEnironment creates virtual environment in the cluster path
+// SetupVirtualEnvironment creates virtual environment in the cluster path
 // and installs required pip3 and ansible dependencies.
-func SetupVirtualEnironment(clusterPath string, venv VirtualEnvironment) error {
+func SetupVirtualEnvironment(clusterPath string, venv VirtualEnvironment) error {
 
 	fmt.Printf("Setting up '%s' virtual environment...\n", venv.Name)
 
@@ -57,18 +53,19 @@ func createVirtualEnvironment(clusterPath string, venvName string) error {
 
 	fmt.Println("Creating virtual environment...")
 
-	venvPath := filepath.Join(venvBinDir, venvName)
+	venvPath := filepath.Join(env.ConstVenvBinDir, venvName)
 
 	cmd := exec.Command("virtualenv", "-p", "python3", venvPath)
 	cmd.Dir = clusterPath
 
 	if env.DebugMode {
 		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 	}
 
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Errorf("Failed to create virutal environment: %w", err)
+		return fmt.Errorf("Failed to create virtual environment: %w", err)
 	}
 
 	return nil
@@ -81,11 +78,12 @@ func installPipRequirements(clusterPath string, venv VirtualEnvironment) error {
 	fmt.Println("This can take up to a minute when the virtual environment is initialized for the first time...")
 
 	cmd := exec.Command("pip3", "install", "-r", venv.RequirementsPath)
-	cmd.Path = filepath.Join(clusterPath, venvBinDir, venv.Name, "bin", "pip3")
+	cmd.Path = filepath.Join(clusterPath, env.ConstVenvBinDir, venv.Name, "bin", "pip3")
 	cmd.Dir = clusterPath
 
 	if env.DebugMode {
 		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 	}
 
 	err := cmd.Run()
