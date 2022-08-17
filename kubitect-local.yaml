@@ -36,7 +36,7 @@ cluster:
       default: # Default properties of all master node instances
         ram: 2
         cpu: 2
-        mainDiskSize: 6
+        mainDiskSize: 8
       instances: # Master node instances
         - id: 1
           host: ubuntu-1
@@ -45,7 +45,7 @@ cluster:
       default:
         ram: 2
         cpu: 2
-        mainDiskSize: 6
+        mainDiskSize: 8
       instances:
         - id: 1 # pipeline-1
           name: pipeline-1
