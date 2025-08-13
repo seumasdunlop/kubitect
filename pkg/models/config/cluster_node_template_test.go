@@ -46,7 +46,7 @@ func TestOS_Defaults(t *testing.T) {
 
 	assert.Equal(t, CENTOS9, os1.Distro)
 	assert.Equal(t, ROCKY9, os2.Distro)
-	assert.Equal(t, UBUNTU22, os3.Distro)
+	assert.Equal(t, UBUNTU24, os3.Distro)
 	assert.Equal(t, "eth0", string(os1.NetworkInterface))
 	assert.Equal(t, "eth0", string(os2.NetworkInterface))
 	assert.Equal(t, "ens3", string(os3.NetworkInterface))

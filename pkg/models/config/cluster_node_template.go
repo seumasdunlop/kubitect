@@ -48,7 +48,7 @@ func (s OS) Validate() error {
 }
 
 func (s *OS) SetDefaults() {
-	s.Distro = defaults.Default(s.Distro, UBUNTU22)
+	s.Distro = defaults.Default(s.Distro, UBUNTU24)
 
 	preset := env.ProjectOsPresets[string(s.Distro)]
 	s.NetworkInterface = defaults.Default(s.NetworkInterface, OSNetworkInterface(preset.NetworkInterface))
@@ -58,6 +58,7 @@ func (s *OS) SetDefaults() {
 type OSDistro string
 
 const (
+	UBUNTU24 OSDistro = "ubuntu24"
 	UBUNTU22 OSDistro = "ubuntu22"
 	UBUNTU20 OSDistro = "ubuntu20"
 	DEBIAN11 OSDistro = "debian11"
@@ -67,7 +68,7 @@ const (
 )
 
 func (d OSDistro) Validate() error {
-	return v.Var(d, v.OneOf(UBUNTU20, UBUNTU22, DEBIAN11, DEBIAN12, CENTOS9, ROCKY9))
+	return v.Var(d, v.OneOf(UBUNTU20, UBUNTU22, UBUNTU24, DEBIAN11, DEBIAN12, CENTOS9, ROCKY9))
 }
 
 type OSNetworkInterface string

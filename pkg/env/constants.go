@@ -57,6 +57,10 @@ var ProjectOsPresets = map[string]struct {
 		Source:           "https://cloud-images.ubuntu.com/releases/jammy/release/ubuntu-22.04-server-cloudimg-amd64.img",
 		NetworkInterface: "ens3",
 	},
+	"ubuntu24": {
+		Source:           "https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img",
+		NetworkInterface: "ens3",
+	},
 	"debian11": {
 		Source:           "https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2",
 		NetworkInterface: "ens3",
